@@ -22,11 +22,11 @@ jobs:
       - name: Build the app
         run: ./mvnw clean package -DskipTests
 
-      - name: Zip source code
+      - name: Zip build artifact
         run: |
-          mkdir deploy-bundle
-          cp -r . deploy-bundle/
-          zip -r springboot-greeting-app.zip deploy-bundle/
+          mkdir bundle
+          cp target/*.jar bundle/
+          zip -r springboot-greeting-app.zip bundle/
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
