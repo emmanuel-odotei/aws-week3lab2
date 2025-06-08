@@ -7,6 +7,7 @@ import java.util.Random;
 
 @Service
 public class GreetingService {
+    
     private static final List<String> EMOJIS = List.of("🚀", "🌟", "✨", "💡", "🔥", "🎉", "😎", "👋", "🧠");
     private final Random random = new Random();
     
