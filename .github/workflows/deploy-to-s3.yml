@@ -39,7 +39,7 @@ jobs:
         run: |
           aws elasticbeanstalk update-environment \
             --environment-name "${{ secrets.EB_ENV_NAME }}" \
-            --version-label "v-${{ github.run_number }}" \
+            --version-label "latest" \
             --region "${{ secrets.AWS_REGION }}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
