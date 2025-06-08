@@ -8,6 +8,7 @@ class Lab2ApplicationTests {
 
 	@Test
 	void contextLoads() {
+		return;
 	}
 
 }
