@@ -35,11 +35,24 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
 
+      - name: Create new Elastic Beanstalk app version
+        run: |
+            aws elasticbeanstalk create-application-version \
+              --application-name "${{ secrets.EB_APP_NAME }}" \
+              --version-label "${{ github.sha }}" \
+              --source-bundle S3Bucket="${{ secrets.AWS_S3_BUCKET }}",S3Key=springboot-greeting-app.zip \
+              --region "${{ secrets.AWS_REGION }}"
+        env:
+            EB_APP_NAME: ${{ secrets.EB_APP_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Update EB environment to new version
         run: |
           aws elasticbeanstalk update-environment \
             --environment-name "${{ secrets.EB_ENV_NAME }}" \
-            --version-label "v1" \
+            --application-name "${{ secrets.EB_APP_NAME }}" \
+            --version-label "${{ github.sha }}" \
             --region "${{ secrets.AWS_REGION }}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
